@@ -760,7 +760,7 @@ for(let li=-3;li<=3;li++){
   app.rotation.x=-Math.PI/2;app.position.set(x0,-.001,2.5);app.receiveShadow=true;scene.add(app);
 }
 /* kickback plates beside the main deck (dark, glossy, like the real ones) */
-[-1,1].forEach(s=>{const k=new THREE.Mesh(new THREE.BoxGeometry(.04,.8,4.4),new THREE.MeshPhysicalMaterial({color:0x111522,roughness:.25,clearcoat:.6}));k.position.set(s*(LANE_W/2+GUT+.05),.3,HEAD_Z-.6);k.receiveShadow=true;scene.add(k);});
+[-1].forEach(s=>{const k=new THREE.Mesh(new THREE.BoxGeometry(.04,.8,4.4),new THREE.MeshPhysicalMaterial({color:0x111522,roughness:.25,clearcoat:.6}));k.position.set(s*(LANE_W/2+GUT+.05),.3,HEAD_Z-.6);k.receiveShadow=true;scene.add(k);});
 const pit=new THREE.Mesh(new THREE.PlaneGeometry(PITCH*8,2.5),new THREE.MeshStandardMaterial({color:0x020307,roughness:1}));
 pit.rotation.x=-Math.PI/2;pit.position.set(0,-.35,HEAD_Z-deckLen-1.2);scene.add(pit);
 const cushion=new THREE.Mesh(new THREE.PlaneGeometry(PITCH*8,1.2),new THREE.MeshStandardMaterial({color:0x07070c,roughness:1}));
@@ -937,7 +937,7 @@ function timeAt(p){
   return {phase:4,t:lerp(T_END,TMAX,(p-P_END)/(1-P_END))};
 }
 const bp=new THREE.Vector3(),pq=new THREE.Quaternion(),camPos=new THREE.Vector3(),look=new THREE.Vector3();
-const IMPACT_POS=new THREE.Vector3(1.0,.2,HEAD_Z+.55),IMPACT_LOOK=new THREE.Vector3(-.02,.17,HEAD_Z-.42);
+const IMPACT_POS=new THREE.Vector3(.74,.19,HEAD_Z+.62),IMPACT_LOOK=new THREE.Vector3(-.02,.17,HEAD_Z-.42);
 let mx=0,my=0,smx=0,smy=0;
 addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;},{passive:true});
 const sPins=document.getElementById('sPins'),sSpeed=document.getElementById('sSpeed'),recTag=document.getElementById('recTag');
@@ -980,7 +980,7 @@ function update(p,time,dt){
     const s=tl.phase===2?sstep((p-P_SIM)/(P_SLOW-P_SIM)):1;
     const follow=tmpV.set(bx*.5+.22,.42,bz+2.2);
     const u=tl.phase===3?(p-P_SLOW)/(P_END-P_SLOW):tl.phase===4?1:0;
-    const orbit=new THREE.Vector3(IMPACT_POS.x+.28*u,IMPACT_POS.y+.07*u,IMPACT_POS.z-.6*u);
+    const orbit=new THREE.Vector3(IMPACT_POS.x+.04*u,IMPACT_POS.y+.07*u,IMPACT_POS.z-.42*u);
     cp.copy(follow).lerp(orbit,s);
     lk.set(lerp(bx*.4,IMPACT_LOOK.x,s),lerp(.12,IMPACT_LOOK.y,s),lerp(bz-5,IMPACT_LOOK.z-.12*u,s));
     fov=lerp(portrait?50:40,portrait?46:30,s);aperture=bokeh?lerp(0,.0018,s):0;
