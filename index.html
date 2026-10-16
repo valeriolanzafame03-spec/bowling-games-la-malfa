@@ -115,6 +115,18 @@ p{margin:0}
   .board{gap:4px 12px;padding:8px 10px}.board dd{font-size:13px}
 }
 
+@media (max-width:700px){
+  .words{font-size:clamp(44px,14vw,64px)}
+  .hero-lead{display:none}
+  .badge img{height:38px}
+  .hero-copy .wrap{gap:12px}
+  .games-stage{gap:16px;justify-content:flex-start;padding-top:16px}
+  .games-stage .plaque{padding:14px 18px}
+  .games-stage .head h2{font-size:32px}
+  .game{min-height:0;width:min(80vw,320px);padding:20px}
+  .game .n{font-size:96px}
+  .game h3{font-size:32px}
+}
 /* ---------- ticker: lit sign ---------- */
 .ticker{background:var(--red);overflow:hidden;white-space:nowrap;border-block:5px solid var(--ink)}
 .ticker-in{display:inline-flex;gap:40px;padding-block:18px;font-family:var(--f-display);font-size:30px;animation:tick 36s linear infinite;color:#fff}
@@ -170,8 +182,24 @@ section{padding-block:clamp(72px,10vw,120px)}
 .pins svg{width:18px;height:44px;flex:none}
 @media (max-width:900px){.levels{grid-template-columns:1fr}.record{grid-template-columns:1fr;padding:26px;gap:16px}}
 
+/* ---------- SIB teaser ---------- */
+.sib-teaser{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;background:var(--paper);border-radius:28px;padding:clamp(24px,4vw,48px);box-shadow:0 10px 0 rgba(26,11,58,.12);position:relative;overflow:hidden}
+.sib-teaser::before{content:"";position:absolute;inset:0 0 auto;height:8px;background:linear-gradient(90deg,#1F9A48 0 33.3%,#e9e4da 33.3% 66.6%,#E12A2C 66.6%)}
+.sib-logo{display:block;line-height:0}
+.sib-logo img{width:100%;height:auto}
+.sib-copy{display:flex;flex-direction:column;gap:16px;min-width:0}
+.sib-copy h2{font-size:clamp(40px,5.5vw,70px)}
+.sib-copy p{color:var(--muted)}
+.sib-facts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sib-facts li{background:#F7F4EE;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.sib-facts b{font-family:var(--f-display);font-weight:400;font-size:28px;color:#1F9A48;line-height:1}
+.sib-facts li:nth-child(2) b{color:var(--ink)}
+.sib-facts li:nth-child(3) b{color:#E12A2C}
+.sib-facts span{font-size:13px;color:var(--muted)}
+.sib-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+@media (max-width:900px){.sib-teaser{grid-template-columns:1fr}.sib-facts{grid-template-columns:1fr}}
 /* ---------- offers: prize tickets ---------- */
-.tickets{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.tickets{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;max-width:900px}
 .ticket{position:relative;display:grid;grid-template-rows:auto 1fr;border-radius:18px;background:var(--paper);min-width:0;overflow:hidden;box-shadow:0 8px 0 rgba(120,60,10,.25)}
 .ticket .top{padding:24px 26px 22px;position:relative;background:var(--tc,var(--red));color:#fff}
 .ticket .top::before,.ticket .top::after{content:"";position:absolute;bottom:-12px;width:24px;height:24px;border-radius:50%;background:var(--maple);z-index:1}
@@ -342,7 +370,7 @@ footer .tel{color:#fff}
     <a class="logo" href="#top" aria-label="Bowling &amp; Games La Malfa, torna su"><img src="img/brand0.png" alt="Bowling &amp; Games La Malfa" width="760" height="262"></a>
     <ul>
       <li><a href="#giochi">Giochi</a></li>
-      <li><a href="#scuola">Scuola</a></li>
+      <li><a href="sib.html">Scuola SIB</a></li>
       <li><a href="#offerte">Offerte</a></li>
       <li><a href="#burger">Burger</a></li>
       <li><a href="#cena">Menù</a></li>
@@ -403,67 +431,25 @@ footer .tel{color:#fff}
       <article class="game c2"><span class="tag">Biliardo</span><div class="n" data-count="8">8</div><div><h3>Tavoli</h3><p>Otto tavoli da biliardo per una sfida prima o dopo la partita.</p></div></article>
       <article class="game c3"><span class="tag">Sala giochi</span><div class="n">F1</div><div><h3>Simulatore</h3><p>Il simulatore di Formula 1 e tanti videogiochi e arcade.</p></div></article>
       <article class="game c4"><span class="tag">Ping pong</span><div class="n" data-count="2">2</div><div><h3>Tavoli</h3><p>Due tavoli da ping pong per scaldare il braccio.</p></div></article>
-      <article class="game c5"><span class="tag">Hamburgers · fast food · happy hours</span><div class="n">€11</div><div><h3>BurgerBowl</h3><p>Panini, pizza, crepes e menù con partita al bowling inclusa.</p></div></article>
+      <article class="game c5"><span class="tag">Hamburgers · fast food · happy hours</span><div class="n" data-count="8">8</div><div><h3>Menù</h3><p>Al BurgerBowl panini, pizza, crepes e menù con partita al bowling inclusa.</p></div></article>
     </div>
   </div>
 </div>
 
 <section class="school" id="scuola">
   <div class="wrap">
-    <div class="head rv">
-      <p class="eyebrow">Scuola bowling · programmi di allenamento</p>
-      <h2>Dal primo tiro alla gara ufficiale</h2>
-      <p>Tre percorsi con istruttore, dalla tecnica di base alla preparazione per i tornei. Scegli il tuo livello e prenota una prova.</p>
-    </div>
-    <div class="levels">
-      <article class="level rv">
-        <span class="lvl">Livello 1</span>
-        <div class="stars" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
-        <h3>Principianti</h3>
-        <p class="tech">Approccio a 4 passi, rilascio e linea di tiro</p>
-        <ul>
-          <li>Impari la camminata e il rilascio corretti, senza vizi da correggere dopo</li>
-          <li>Scegli la palla giusta per peso e foratura della mano</li>
-          <li>Prendi confidenza con le frecce della pista e il tiro dritto</li>
-          <li>Inizi a chiudere gli spare più semplici con regolarità</li>
+    <div class="sib-teaser rv">
+      <a class="sib-logo" href="sib.html" aria-label="Scuola Italiana Bowling, vai alla pagina"><img src="img/sib-logo.webp" alt="Scuola Italiana Bowling (S.I.B.)" width="520" height="330"></a>
+      <div class="sib-copy">
+        <p class="eyebrow">La nostra scuola di bowling</p>
+        <h2>Scuola Italiana Bowling</h2>
+        <p>La S.I.B. nasce sulle nostre piste ed è tra le migliori scuole d'Italia. I suoi giocatori hanno disputato competizioni mondiali, alcuni sono diventati campioni europei e oltre 100 atleti sono arrivati in gara ufficiale. Corsi per principianti, amatori e agonisti, per tutte le età.</p>
+        <ul class="sib-facts">
+          <li><b>100+</b><span>atleti in gara ufficiale</span></li>
+          <li><b>Europei</b><span>campioni europei tra i nostri giocatori</span></li>
+          <li><b>Mondiali</b><span>competizioni internazionali disputate</span></li>
         </ul>
-        <a class="btn btn-ghost" href="#prenota">Prenota una prova</a>
-      </article>
-      <article class="level rv">
-        <span class="lvl">Livello 2</span>
-        <div class="stars" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i></div>
-        <h3>Intermedi</h3>
-        <p class="tech">Effetto a uscire, olio in pista e sistema degli spare</p>
-        <ul>
-          <li>Costruisci un tiro con effetto stabile e ripetibile</li>
-          <li>Leggi la distribuzione dell'olio e adatti linea e velocità</li>
-          <li>Usi un sistema per gli spare e superi lo stallo nella media</li>
-          <li>Segui un piano di allenamento con obiettivi misurabili</li>
-        </ul>
-        <a class="btn btn-ghost" href="#prenota">Prenota una prova</a>
-      </article>
-      <article class="level pro rv">
-        <span class="pro-tag">PRO</span>
-        <span class="lvl">Livello 3</span>
-        <div class="stars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i></div>
-        <h3>Agonisti</h3>
-        <p class="tech">Preparazione pre-gara e tiro sotto pressione</p>
-        <ul>
-          <li>Programma costruito sul calendario dei tornei, con picco di forma in gara</li>
-          <li>Gestione delle transizioni dell'olio e dei cambi di pista durante la serie</li>
-          <li>Routine pre-tiro e controllo dei frame decisivi</li>
-          <li>Rifinitura tecnica sui tiri che fanno la differenza in classifica</li>
-        </ul>
-        <a class="btn btn-hot" href="#prenota">Richiedi un colloquio</a>
-      </article>
-    </div>
-    <div class="record bulbs rv" role="group" aria-label="Track record agonistico">
-      <div class="num"><span data-count="100">100</span>+</div>
-      <div>
-        <span class="eyebrow">Track record agonistico</span>
-        <h3>Oltre 100 atleti portati in gara ufficiale</h3>
-        <p>Più di cento allievi della nostra scuola sono partiti dalle prime lezioni e sono arrivati in pedana a una competizione ufficiale. Un risultato costruito sulle nostre piste, serie dopo serie.</p>
-        <div class="pins" id="recPins" aria-hidden="true"></div>
+        <div class="sib-actions"><a class="btn btn-hot" href="sib.html">Scopri la S.I.B.</a><span class="note">Info e lezione di prova: <span class="tel">338 971 4909</span></span></div>
       </div>
     </div>
   </div>
@@ -478,7 +464,6 @@ footer .tel{color:#fff}
     <div class="tickets">
       <article class="ticket rv"><div class="top"><span class="day">Martedì e giovedì · dopo le 20:00</span><div class="big">½</div></div><div class="bot"><h3>Coppia</h3><p>Tutte le coppie pagano la metà.</p></div></article>
       <article class="ticket t2 rv"><div class="top"><span class="day">Domenica e festivi</span><div class="big">2+1</div></div><div class="bot"><h3>Terza in omaggio</h3><p>Se giochi 2 partite, la terza te la offriamo noi.</p></div></article>
-      <article class="ticket t3 rv"><div class="top"><span class="day">Al BurgerBowl</span><div class="big">€11</div></div><div class="bot"><h3>Brooklyn Burger</h3><p>Burger, patatine e birra alla spina bionda 25 cl. <a href="#burger">Guardalo montarsi</a></p></div></article>
     </div>
   </div>
 </section>
@@ -488,9 +473,9 @@ footer .tel{color:#fff}
     <div class="bk-sun" aria-hidden="true"></div>
     <div class="wrap bk-grid">
       <div class="bk-copy">
-        <p class="eyebrow">BurgerBowl · offerta</p>
+        <p class="eyebrow">BurgerBowl</p>
         <h2>Brooklyn <span>Burger</span></h2>
-        <p>Scorri e guardalo montarsi, strato dopo strato. Con patatine e birra alla spina bionda 25 cl.</p>
+        <p>Scorri e guardalo montarsi, strato dopo strato: bun artigianale, manzo 100%, cheddar fuso e bacon croccante.</p>
         <ol class="layers" id="layers">
           <li><span>06</span>Base brioche tostata</li>
           <li><span>05</span>Pomodoro fresco</li>
@@ -499,7 +484,6 @@ footer .tel{color:#fff}
           <li><span>02</span>Bacon croccante</li>
           <li><span>01</span>Bun artigianale al sesamo</li>
         </ol>
-        <div class="stamp"><b id="stamp">€11</b><span>Burger, patatine e birra alla spina</span></div>
         <div><a class="btn btn-sun" href="#prenota">Prenota un tavolo</a></div>
       </div>
       <div class="bk-plate">
@@ -676,7 +660,6 @@ const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
   else{
     const tl=gsap.timeline({scrollTrigger:{trigger:'.bk-track',start:'top top+=66',end:'bottom bottom',scrub:.7}});
     imgs.forEach((im,i)=>tl.fromTo(im,{y:-innerHeight*.9-(i*40),rotate:gsap.utils.random(-14,14),opacity:0},{y:0,rotate:0,opacity:1,duration:1,ease:'bounce.out',onStart:()=>steps[i].classList.add('on'),onReverseComplete:()=>steps[i].classList.remove('on')},i*.75));
-    tl.fromTo('#stamp',{scale:2.4,opacity:0,rotate:-20},{scale:1,opacity:1,rotate:-5,duration:.6,ease:'back.out(3)'},imgs.length*.75+.2);
     tl.fromTo('.bk-sun',{scale:.6},{scale:1.25,duration:imgs.length*.75+.8,ease:'none'},0);
   }
   addEventListener('load',()=>ScrollTrigger.refresh());
@@ -703,9 +686,9 @@ try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'hig
 catch(e){document.documentElement.classList.add('no3d');throw e;}
 const small=Math.min(innerWidth,innerHeight)<700;
 const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
-renderer.setPixelRatio(Math.min(devicePixelRatio||1,small?1.5:2));
+renderer.setPixelRatio(Math.min(devicePixelRatio||1,small?1.25:2));
 renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.85;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=small?.7:.72;
 
 const scene=new THREE.Scene();
 scene.background=new THREE.Color(0x0e0820);
@@ -757,7 +740,7 @@ for(let li=-3;li<=3;li++){
   lane.rotation.x=-Math.PI/2;lane.position.set(x0,0,-(LANE_L+deckLen)/2);lane.receiveShadow=true;scene.add(lane);
   [-1,1].forEach(s=>{const gut=new THREE.Mesh(new THREE.BoxGeometry(GUT,.02,LANE_L+deckLen),gutterMat);gut.position.set(x0+s*(LANE_W/2+GUT/2),-.07,-(LANE_L+deckLen)/2);gut.receiveShadow=true;scene.add(gut);});
   const cap=new THREE.Mesh(new THREE.BoxGeometry(.18,.06,LANE_L+deckLen),capMat);cap.position.set(x0+PITCH/2,.02,-(LANE_L+deckLen)/2);scene.add(cap);
-  const led=new THREE.Mesh(new THREE.BoxGeometry(.025,.012,LANE_L+deckLen),new THREE.MeshBasicMaterial({color:[0xff2fb8,0x1fcdeb,0xffc93c][(li+3)%3]}));
+  const led=new THREE.Mesh(new THREE.BoxGeometry(.025,.012,LANE_L+deckLen),new THREE.MeshBasicMaterial({color:new THREE.Color([0xff2fb8,0x1fcdeb,0xffc93c][(li+3)%3]).multiplyScalar(.45)}));
   led.position.set(x0+PITCH/2,.056,-(LANE_L+deckLen)/2);scene.add(led);
   const app=new THREE.Mesh(new THREE.PlaneGeometry(PITCH,5),new THREE.MeshPhysicalMaterial({map:wood,roughness:.45,clearcoat:.5,color:0x9a8270}));
   app.rotation.x=-Math.PI/2;app.position.set(x0,-.001,2.5);app.receiveShadow=true;scene.add(app);
@@ -781,10 +764,10 @@ function maskTex(n){
 }
 for(let li=-3;li<=3;li++){
   const tx=maskTex(5+li);
-  const m=new THREE.Mesh(new THREE.PlaneGeometry(PITCH*.98,PITCH*.98*160/512),new THREE.MeshStandardMaterial({map:tx,emissive:0xffffff,emissiveMap:tx,emissiveIntensity:.9,roughness:.6}));
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(PITCH*.98,PITCH*.98*160/512),new THREE.MeshStandardMaterial({map:tx,emissive:0xffffff,emissiveMap:tx,emissiveIntensity:.35,roughness:.6}));
   m.position.set(li*PITCH,1.15,HEAD_Z-deckLen+.05);scene.add(m);
 }
-[[0xf02fb8,1.9],[0x1fcdeb,2.05],[0xffc93c,2.2]].forEach(([c,y])=>{const tube=new THREE.Mesh(new THREE.CylinderGeometry(.018,.018,PITCH*7,12),new THREE.MeshBasicMaterial({color:c}));tube.rotation.z=Math.PI/2;tube.position.set(0,y,HEAD_Z-deckLen-1.55);scene.add(tube);});
+[[0xf02fb8,1.9],[0x1fcdeb,2.05],[0xffc93c,2.2]].forEach(([c,y])=>{const tube=new THREE.Mesh(new THREE.CylinderGeometry(.018,.018,PITCH*7,12),new THREE.MeshBasicMaterial({color:new THREE.Color(c).multiplyScalar(.5)}));tube.rotation.z=Math.PI/2;tube.position.set(0,y,HEAD_Z-deckLen-1.55);scene.add(tube);});
 
 /* ---- lights: bright pin deck, dark hall (like a high-speed camera shot) ---- */
 scene.add(new THREE.HemisphereLight(0xb8a8ff,0x3a2010,.25));
@@ -794,7 +777,7 @@ deckLight.castShadow=true;deckLight.shadow.mapSize.set(small?1024:2048,small?102
 scene.add(deckLight,deckLight.target);
 const keyLight=new THREE.SpotLight(0xffffff,14,6,Math.PI/7,.6,1.5);keyLight.position.set(1.6,1.0,HEAD_Z+.6);keyLight.target.position.set(0,.15,HEAD_Z-.4);scene.add(keyLight,keyLight.target);
 for(let li=-3;li<=3;li++){if(!li)continue;const s=new THREE.SpotLight(0xffd8a8,55,9,Math.PI/6,.5,1.6);s.position.set(li*PITCH,3,HEAD_Z+2);s.target.position.set(li*PITCH,0,HEAD_Z-.4);scene.add(s,s.target);}
-const approachLight=new THREE.SpotLight(0xffffff,90,10,Math.PI/5,.6,1.5);approachLight.position.set(0,3.5,2.2);approachLight.target.position.set(0,0,-2);approachLight.castShadow=true;approachLight.shadow.mapSize.set(1024,1024);scene.add(approachLight,approachLight.target);
+const approachLight=new THREE.SpotLight(0xffffff,90,10,Math.PI/5,.6,1.5);approachLight.position.set(0,3.5,2.2);approachLight.target.position.set(0,0,-2);approachLight.castShadow=!small;approachLight.shadow.mapSize.set(1024,1024);scene.add(approachLight,approachLight.target);
 for(let z=-3;z>HEAD_Z+2;z-=4){const p=new THREE.PointLight(0xcfd8ff,5,7,1.8);p.position.set(0,2.6,z);scene.add(p);}
 const pinkL=new THREE.PointLight(0xf02fb8,10,7,2);pinkL.position.set(-1.6,1,1);scene.add(pinkL);
 const cyanL=new THREE.PointLight(0x1fcdeb,8,7,2);cyanL.position.set(1.8,1,-3);scene.add(cyanL);
@@ -917,7 +900,7 @@ const composer=new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene,camera));
 let bokeh=null;
 if(!small){try{bokeh=new BokehPass(scene,camera,{focus:1.2,aperture:0,maxblur:.008});composer.addPass(bokeh);}catch(e){bokeh=null;}}
-const bloom=new UnrealBloomPass(new THREE.Vector2(1,1),.22,.3,.92);
+const bloom=new UnrealBloomPass(new THREE.Vector2(1,1),.14,.25,.95);
 composer.addPass(bloom);composer.addPass(new OutputPass());
 let portrait=false;
 function resize(){
