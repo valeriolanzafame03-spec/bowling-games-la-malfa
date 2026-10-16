@@ -986,6 +986,8 @@ function update(p,time,dt){
     lk.set(lerp(bx*.4,IMPACT_LOOK.x,s),lerp(.12,IMPACT_LOOK.y,s),lerp(bz-5,IMPACT_LOOK.z-.12*u,s));
     fov=lerp(portrait?50:40,portrait?50:36,s);aperture=bokeh?lerp(0,.0018,s):0;
     if(tl.phase===4){const e=sstep((p-P_END)/(1-P_END));cp.lerp(tmpV.set(.75,.8,HEAD_Z+1.9),e);lk.lerp(tmpV.set(0,.04,HEAD_Z-.55),e);}
+    /* keep the rack clear of the headline: right half on wide screens, upper half on phones */
+    if(portrait)lk.y-=.13*s;else lk.x-=.32*s;
   }
   if(portrait){const d=tmpV.subVectors(cp,lk);cp.copy(lk).addScaledVector(d,1.45);}
   smx+=(mx-smx)*.05;smy+=(my-smy)*.05;
