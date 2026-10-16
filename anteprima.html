@@ -912,7 +912,7 @@ function updateFx(dt){
 const composer=new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene,camera));
 let bokeh=null;
-if(!small){try{bokeh=new BokehPass(scene,camera,{focus:1.2,aperture:0,maxblur:.008});composer.addPass(bokeh);}catch(e){bokeh=null;}}
+if(!small&&!/nobokeh/.test(location.search+location.hash)){try{bokeh=new BokehPass(scene,camera,{focus:1.2,aperture:0,maxblur:.008});composer.addPass(bokeh);}catch(e){bokeh=null;}}
 const bloom=new UnrealBloomPass(new THREE.Vector2(1,1),.45,.45,.85);
 composer.addPass(bloom);composer.addPass(new OutputPass());
 let portrait=false;
@@ -1004,11 +1004,12 @@ function loop(){
   const dt=Math.min(.05,clock.getDelta());
   updateFx(dt);
   if(!visible)return;
-  const target=window.LANE?LANE.p:0;
-  shown+=(target-shown)*(1-Math.exp(-(REDUCE?30:6)*dt));
+  const target=window.__forceP!=null?window.__forceP:(window.LANE?LANE.p:0);
+  shown=window.__forceP!=null?target:shown+(target-shown)*(1-Math.exp(-(REDUCE?30:6)*dt));
   update(shown,clock.elapsedTime,dt);
   composer.render();
 }
+window.__hero={camera,bokeh,scene,renderer,setP:v=>{window.__forceP=v;}};
 update(0,0,0);composer.render();loop();
 </script>
 
