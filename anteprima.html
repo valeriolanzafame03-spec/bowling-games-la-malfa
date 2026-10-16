@@ -702,14 +702,14 @@ const small=Math.min(innerWidth,innerHeight)<700;
 const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
 renderer.setPixelRatio(Math.min(devicePixelRatio||1,small?1.5:2));
 renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.85;
 
 const scene=new THREE.Scene();
 scene.background=new THREE.Color(0x0e0820);
 scene.fog=new THREE.FogExp2(0x0e0820,0.04);
 const pmrem=new THREE.PMREMGenerator(renderer);
 scene.environment=pmrem.fromScene(new RoomEnvironment(renderer),0.04).texture;
-scene.environmentIntensity=0.45;
+scene.environmentIntensity=0.18;
 const camera=new THREE.PerspectiveCamera(40,1,0.02,80);
 
 /* ---- real dimensions (metres) ---- */
@@ -784,15 +784,15 @@ for(let li=-3;li<=3;li++){
 [[0xf02fb8,1.9],[0x1fcdeb,2.05],[0xffc93c,2.2]].forEach(([c,y])=>{const tube=new THREE.Mesh(new THREE.CylinderGeometry(.018,.018,PITCH*7,12),new THREE.MeshBasicMaterial({color:c}));tube.rotation.z=Math.PI/2;tube.position.set(0,y,HEAD_Z-deckLen-1.55);scene.add(tube);});
 
 /* ---- lights: bright pin deck, dark hall (like a high-speed camera shot) ---- */
-scene.add(new THREE.HemisphereLight(0xb8a8ff,0x3a2010,.55));
-const deckLight=new THREE.SpotLight(0xfff1dc,220,9,Math.PI/5.5,.5,1.6);
+scene.add(new THREE.HemisphereLight(0xb8a8ff,0x3a2010,.25));
+const deckLight=new THREE.SpotLight(0xfff1dc,90,9,Math.PI/5.5,.5,1.6);
 deckLight.position.set(.4,3.0,HEAD_Z+1.6);deckLight.target.position.set(0,0,HEAD_Z-.4);
 deckLight.castShadow=true;deckLight.shadow.mapSize.set(small?1024:2048,small?1024:2048);deckLight.shadow.bias=-.0002;deckLight.shadow.normalBias=.02;
 scene.add(deckLight,deckLight.target);
-const keyLight=new THREE.SpotLight(0xffffff,90,6,Math.PI/7,.6,1.5);keyLight.position.set(1.6,1.0,HEAD_Z+.6);keyLight.target.position.set(0,.15,HEAD_Z-.4);scene.add(keyLight,keyLight.target);
+const keyLight=new THREE.SpotLight(0xffffff,14,6,Math.PI/7,.6,1.5);keyLight.position.set(1.6,1.0,HEAD_Z+.6);keyLight.target.position.set(0,.15,HEAD_Z-.4);scene.add(keyLight,keyLight.target);
 for(let li=-3;li<=3;li++){if(!li)continue;const s=new THREE.SpotLight(0xffd8a8,55,9,Math.PI/6,.5,1.6);s.position.set(li*PITCH,3,HEAD_Z+2);s.target.position.set(li*PITCH,0,HEAD_Z-.4);scene.add(s,s.target);}
 const approachLight=new THREE.SpotLight(0xffffff,90,10,Math.PI/5,.6,1.5);approachLight.position.set(0,3.5,2.2);approachLight.target.position.set(0,0,-2);approachLight.castShadow=true;approachLight.shadow.mapSize.set(1024,1024);scene.add(approachLight,approachLight.target);
-for(let z=-3;z>HEAD_Z+2;z-=4){const p=new THREE.PointLight(0xcfd8ff,10,7,1.8);p.position.set(0,2.6,z);scene.add(p);}
+for(let z=-3;z>HEAD_Z+2;z-=4){const p=new THREE.PointLight(0xcfd8ff,5,7,1.8);p.position.set(0,2.6,z);scene.add(p);}
 const pinkL=new THREE.PointLight(0xf02fb8,10,7,2);pinkL.position.set(-1.6,1,1);scene.add(pinkL);
 const cyanL=new THREE.PointLight(0x1fcdeb,8,7,2);cyanL.position.set(1.8,1,-3);scene.add(cyanL);
 
@@ -913,7 +913,7 @@ const composer=new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene,camera));
 let bokeh=null;
 if(!small&&!/nobokeh/.test(location.search+location.hash)){try{bokeh=new BokehPass(scene,camera,{focus:1.2,aperture:0,maxblur:.008});composer.addPass(bokeh);}catch(e){bokeh=null;}}
-const bloom=new UnrealBloomPass(new THREE.Vector2(1,1),.45,.45,.85);
+const bloom=new UnrealBloomPass(new THREE.Vector2(1,1),.22,.3,.92);
 composer.addPass(bloom);composer.addPass(new OutputPass());
 let portrait=false;
 function resize(){
@@ -937,7 +937,7 @@ function timeAt(p){
   return {phase:4,t:lerp(T_END,TMAX,(p-P_END)/(1-P_END))};
 }
 const bp=new THREE.Vector3(),pq=new THREE.Quaternion(),camPos=new THREE.Vector3(),look=new THREE.Vector3();
-const IMPACT_POS=new THREE.Vector3(.74,.19,HEAD_Z+.62),IMPACT_LOOK=new THREE.Vector3(-.02,.17,HEAD_Z-.42);
+const IMPACT_POS=new THREE.Vector3(.62,.21,HEAD_Z+1.15),IMPACT_LOOK=new THREE.Vector3(-.05,.16,HEAD_Z-.45);
 let mx=0,my=0,smx=0,smy=0;
 addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;},{passive:true});
 const sPins=document.getElementById('sPins'),sSpeed=document.getElementById('sSpeed'),recTag=document.getElementById('recTag');
@@ -980,10 +980,10 @@ function update(p,time,dt){
     const s=tl.phase===2?sstep((p-P_SIM)/(P_SLOW-P_SIM)):1;
     const follow=tmpV.set(bx*.5+.22,.42,bz+2.2);
     const u=tl.phase===3?(p-P_SLOW)/(P_END-P_SLOW):tl.phase===4?1:0;
-    const orbit=new THREE.Vector3(IMPACT_POS.x+.04*u,IMPACT_POS.y+.07*u,IMPACT_POS.z-.42*u);
+    const orbit=new THREE.Vector3(IMPACT_POS.x+.12*u,IMPACT_POS.y+.06*u,IMPACT_POS.z-.55*u);
     cp.copy(follow).lerp(orbit,s);
     lk.set(lerp(bx*.4,IMPACT_LOOK.x,s),lerp(.12,IMPACT_LOOK.y,s),lerp(bz-5,IMPACT_LOOK.z-.12*u,s));
-    fov=lerp(portrait?50:40,portrait?46:30,s);aperture=bokeh?lerp(0,.0018,s):0;
+    fov=lerp(portrait?50:40,portrait?50:36,s);aperture=bokeh?lerp(0,.0018,s):0;
     if(tl.phase===4){const e=sstep((p-P_END)/(1-P_END));cp.lerp(tmpV.set(.75,.8,HEAD_Z+1.9),e);lk.lerp(tmpV.set(0,.04,HEAD_Z-.55),e);}
   }
   if(portrait){const d=tmpV.subVectors(cp,lk);cp.copy(lk).addScaledVector(d,1.45);}
@@ -1009,7 +1009,7 @@ function loop(){
   update(shown,clock.elapsedTime,dt);
   composer.render();
 }
-window.__hero={camera,bokeh,scene,renderer,setP:v=>{window.__forceP=v;}};
+window.__hero={camera,bokeh,scene,renderer,composer,bloom,setP:v=>{window.__forceP=v;}};
 update(0,0,0);composer.render();loop();
 </script>
 
