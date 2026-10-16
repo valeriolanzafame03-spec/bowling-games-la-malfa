@@ -857,10 +857,11 @@ function hookX(z){
 function arrowsTex(){
   const c=document.createElement('canvas');c.width=256;c.height=256;const g=c.getContext('2d');
   const tri=(cx,h,w)=>{g.beginPath();g.moveTo(cx,232-h);g.lineTo(cx-w/2,232);g.lineTo(cx+w/2,232);g.closePath();};
-  g.shadowColor='rgba(255,30,40,.95)';g.shadowBlur=26;
-  [[70,170,52],[128,206,56],[186,170,52]].forEach(([x,h,w])=>{tri(x,h,w);g.fillStyle='#E31B2F';g.fill();});
-  g.shadowBlur=0;g.lineWidth=6;g.strokeStyle='#ffffff';g.lineJoin='round';
-  [[70,170,52],[128,206,56],[186,170,52]].forEach(([x,h,w])=>{tri(x,h,w);g.stroke();});
+  const T=[[70,170,52],[128,206,56],[186,170,52]];
+  g.shadowColor='rgba(255,20,35,1)';g.shadowBlur=28;g.lineJoin='round';
+  T.forEach(([x,h,w])=>{tri(x,h,w);g.fillStyle='#E31B2F';g.fill();});
+  g.shadowBlur=0;
+  T.forEach(([x,h,w])=>{tri(x,h,w);const gr=g.createLinearGradient(x-w/2,0,x+w/2,0);gr.addColorStop(0,'#ff4a55');gr.addColorStop(.5,'#E31B2F');gr.addColorStop(1,'#9e0d1c');g.fillStyle=gr;g.fill();g.lineWidth=3.5;g.strokeStyle='#ffffff';g.stroke();});
   const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;
 }
 function ringTex(){
@@ -871,8 +872,8 @@ function ringTex(){
 const AT=arrowsTex(),RT=ringTex();
 const fxPool=[];
 for(let i=0;i<10;i++){
-  const arrows=new THREE.Sprite(new THREE.SpriteMaterial({map:AT,transparent:true,depthTest:false,depthWrite:false,opacity:0}));
-  const ring=new THREE.Sprite(new THREE.SpriteMaterial({map:RT,transparent:true,depthTest:false,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0}));
+  const arrows=new THREE.Sprite(new THREE.SpriteMaterial({map:AT,transparent:true,depthTest:false,depthWrite:false,opacity:0,toneMapped:false}));
+  const ring=new THREE.Sprite(new THREE.SpriteMaterial({map:RT,transparent:true,depthTest:false,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0,toneMapped:false}));
   arrows.renderOrder=10;ring.renderOrder=9;arrows.visible=ring.visible=false;scene.add(arrows,ring);
   fxPool.push({arrows,ring,age:9,base:new THREE.Vector3(),str:1,rot:0});
 }
