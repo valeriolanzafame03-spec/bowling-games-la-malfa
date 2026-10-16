@@ -963,6 +963,7 @@ function update(p,time,dt){
     cp.set(lerp(.55,bx*.5+.22,f),lerp(.62,.42,f),lerp(2.1,bz+2.2,f));
     lk.set(lerp(0,bx*.4,f),lerp(.1,.12,f),lerp(-6,bz-5,f));
     if(tl.phase===1&&tl.u>.82){const s=sstep((tl.u-.82)/.18);cp.lerp(tmpV.set(IMPACT_POS.x*.6,.35,HEAD_Z+2.4),s*.6);}
+    if(portrait)lk.y-=.32;
   }else{
     const s=tl.phase===2?sstep((p-P_SIM)/(P_SLOW-P_SIM)):1;
     const follow=tmpV.set(bx*.5+.22,.42,bz+2.2);
