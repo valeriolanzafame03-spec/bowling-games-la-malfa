@@ -52,7 +52,7 @@ p{margin:0}
 .bulbs{position:relative}
 .bulbs::before,.bulbs::after{content:"";position:absolute;left:10px;right:10px;height:12px;pointer-events:none;
   background:radial-gradient(circle at 6px 6px,#fffbe6 0 2.5px,var(--sun) 3.5px,rgba(255,201,60,.0) 6px) 0 0/24px 12px repeat-x;
-  filter:drop-shadow(0 0 5px rgba(255,201,60,.9))}
+}
 .bulbs::before{top:-6px}
 .bulbs::after{bottom:-6px;background-position:12px 0;animation:blink 1s steps(1) infinite}
 .bulbs.chase::before{animation:blink 1s steps(1) infinite .5s}
@@ -236,7 +236,8 @@ section{padding-block:clamp(72px,10vw,120px)}
 .bk-plate{position:relative;height:100%;min-width:0;display:flex;align-items:center;justify-content:center}
 .burger{position:relative;width:min(100%,570px);aspect-ratio:570/485;max-width:100%}
 @media (max-width:900px){.burger{width:min(100%,570px,calc((100svh - var(--nav) - 250px)*1.175))}}
-.burger img{position:absolute;max-width:none;height:auto;will-change:transform;filter:drop-shadow(0 18px 20px rgba(80,0,10,.45))}
+.burger img{position:absolute;max-width:none;height:auto;will-change:transform}
+.burger::after{content:"";position:absolute;left:8%;right:8%;bottom:-4%;height:9%;border-radius:50%;background:radial-gradient(closest-side,rgba(80,0,10,.45),rgba(80,0,10,0));pointer-events:none}
 @media (max-width:900px){
   .bk-stage{background:repeating-conic-gradient(from 0deg at 50% 32%,#E31B2F 0 9deg,#F0423A 9deg 18deg)}
   .bk-grid{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;gap:8px;padding-block:10px}
@@ -631,6 +632,7 @@ const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
     heroUI(0);document.documentElement.classList.add('games-static');return;
   }
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ignoreMobileResize:true,autoRefreshEvents:'visibilitychange,DOMContentLoaded,load'});
   ScrollTrigger.create({trigger:track,start:'top top+=66',end:'bottom bottom',onUpdate:self=>{LANE.p=self.progress;heroUI(self.progress);}});
   heroUI(0);
 
@@ -655,7 +657,8 @@ const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const steps=[...document.querySelectorAll('#layers li')];
   const box=$('#burgerEl');
   function place(){const k=box.clientWidth/570;imgs.forEach(im=>{im.style.left=((+im.dataset.x-230)*k)+'px';im.style.top=((+im.dataset.y-37)*k)+'px';im.style.width=(+im.getAttribute('width')/570*100)+'%';});}
-  place();addEventListener('resize',place);
+  let lastW=0;const placeIfChanged=()=>{const w=box.clientWidth;if(w!==lastW){lastW=w;place();}};
+  place();lastW=box.clientWidth;addEventListener('resize',placeIfChanged,{passive:true});
   if(REDUCE){steps.forEach(s=>s.classList.add('on'));}
   else{
     const tl=gsap.timeline({scrollTrigger:{trigger:'.bk-track',start:'top top+=66',end:'bottom bottom',scrub:.7}});
@@ -686,7 +689,7 @@ try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'hig
 catch(e){document.documentElement.classList.add('no3d');throw e;}
 const small=Math.min(innerWidth,innerHeight)<700;
 const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
-renderer.setPixelRatio(Math.min(devicePixelRatio||1,small?1.25:2));
+renderer.setPixelRatio(Math.min(devicePixelRatio||1,small?1.25:1.5));
 renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=small?.7:.72;
 
@@ -903,8 +906,10 @@ if(!small){try{bokeh=new BokehPass(scene,camera,{focus:1.2,aperture:0,maxblur:.0
 const bloom=new UnrealBloomPass(new THREE.Vector2(1,1),.14,.25,.95);
 composer.addPass(bloom);composer.addPass(new OutputPass());
 let portrait=false;
+let lastSize='';
 function resize(){
   const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;
+  const key=w+'x'+Math.round(h/40);if(key===lastSize)return;lastSize=key;
   renderer.setSize(w,h,false);composer.setSize(w,h);bloom.resolution.set(w/2,h/2);
   camera.aspect=w/h;portrait=w/h<.85;camera.updateProjectionMatrix();
 }
@@ -928,7 +933,7 @@ const IMPACT_POS=new THREE.Vector3(.62,.21,HEAD_Z+1.15),IMPACT_LOOK=new THREE.Ve
 let mx=0,my=0,smx=0,smy=0;
 addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;},{passive:true});
 const stage=document.querySelector('.lane-stage'),sPins=document.getElementById('sPins'),sSpeed=document.getElementById('sSpeed'),recTag=document.getElementById('recTag');
-let lastT=-1;
+let lastT=-1,lastSpd='',lastPhase=-1;
 const rollAxis=new THREE.Vector3(1,0,.05).normalize();
 
 function update(p,time,dt){
@@ -953,8 +958,8 @@ function update(p,time,dt){
   const fi=Math.min(SIM.n-1,Math.max(0,Math.floor(tp/SIM.rec)));
   const down=tl.t<0?0:SIM.downAt[fi];
   if(sPins.textContent!==String(down))sPins.textContent=down;
-  sSpeed.textContent=tl.phase===1||tl.phase===2?'29':tl.phase===0?'0':'29';
-  recTag.classList.toggle('on',tl.phase===3);stage.classList.toggle('slowmo',tl.phase>=2&&tl.phase<=3);
+  const spd=tl.phase===0?'0':'29';if(spd!==lastSpd){lastSpd=spd;sSpeed.textContent=spd;}
+  if(tl.phase!==lastPhase){lastPhase=tl.phase;recTag.classList.toggle('on',tl.phase===3);stage.classList.toggle('slowmo',tl.phase>=2&&tl.phase<=3);}
   window.heroStrike&&window.heroStrike(down===10&&p>.6&&p<.97);
   /* camera */
   let cp=camPos,lk=look,fov=portrait?50:40,aperture=0;
@@ -989,13 +994,18 @@ function update(p,time,dt){
 const clock=new THREE.Clock();
 let visible=true,shown=0;
 new IntersectionObserver(es=>visible=es[0].isIntersecting).observe(canvas);
+let idleFrames=0;
 function loop(){
   requestAnimationFrame(loop);
   const dt=Math.min(.05,clock.getDelta());
-  updateFx(dt);
   if(!visible)return;
   const target=window.LANE?LANE.p:0;
-  shown+=(target-shown)*(1-Math.exp(-(REDUCE?30:6)*dt));
+  const moving=Math.abs(target-shown)>1e-4;
+  const fxOn=fxPool.some(f=>f.age<1.2)||shake>0||flashA>0;
+  /* draw only when something changes; at rest keep a gentle sway at ~30 fps */
+  if(!moving&&!fxOn&&!(shown<P_ROLL0&&(idleFrames++&1)===0))return;
+  updateFx(dt);
+  shown=moving?shown+(target-shown)*(1-Math.exp(-(REDUCE?30:7)*dt)):target;
   update(shown,clock.elapsedTime,dt);
   composer.render();
 }
