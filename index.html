@@ -492,7 +492,7 @@ footer .tel{color:#fff}
       </div>
       <div class="bk-plate">
         <div class="burger" id="burgerEl" role="img" aria-label="Il Brooklyn Burger si compone strato dopo strato: base brioche, pomodoro, manzo, cheddar, bacon e bun al sesamo">
-          <img class="poster" src="img/burger/f101.webp" alt="" width="640" height="640">
+          <img class="poster" src="img/burger/f116.webp" alt="" width="640" height="640">
           <canvas id="burgerCanvas" width="640" height="640" aria-hidden="true"></canvas>
           <span class="bk-load" aria-hidden="true">Caricamento…</span>
         </div>
@@ -630,9 +630,9 @@ const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const steps=[...document.querySelectorAll('#layers li')];
   const bEl=$('#burgerEl'),bCv=$('#burgerCanvas'),bCtx=bCv.getContext('2d');
   const MOB=matchMedia('(max-width: 760px)').matches;
-  const BN=101,BDIR=MOB?'img/burger-m/':'img/burger/',BSZ=MOB?420:640;
+  const BN=116,BDIR=MOB?'img/burger-m/':'img/burger/',BSZ=MOB?420:640;
   bCv.width=bCv.height=BSZ;
-  const STEP_AT=[0,.28,.36,.55,.73,.86]; /* when each layer lands, as a share of the clip */
+  const STEP_AT=[0,.21,.31,.5,.68,.79]; /* when each layer lands, as a share of the clip */
   const frames=new Array(BN);let bWant=BN-1,bDrawn=-1,bLoaded=0,bStarted=false,bRaf=0;
   const src=i=>BDIR+'f'+String(i+1).padStart(3,'0')+'.webp';
   function nearest(i){for(let d=0;d<BN;d++){if(frames[i-d]&&frames[i-d].complete&&frames[i-d].naturalWidth)return i-d;if(frames[i+d]&&frames[i+d].complete&&frames[i+d].naturalWidth)return i+d;}return -1;}
