@@ -214,35 +214,38 @@ section{padding-block:clamp(72px,10vw,120px)}
 .ticket.t3 .top{color:var(--ink)}
 @media (max-width:900px){.tickets{grid-template-columns:1fr}}
 
-/* ---------- burger: sunburst ---------- */
-.bk-track{position:relative;height:300vh;background:var(--red)}
+/* ---------- burger: real footage scrubbed by scroll ---------- */
+.bk-track{position:relative;height:320vh;background:#0b0a08}
 .bk-stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--nav));height:calc(100vh - var(--nav));height:calc(100svh - var(--nav));overflow:hidden;display:flex;align-items:center;
-  background:repeating-conic-gradient(from 0deg at 66% 55%,#E31B2F 0 9deg,#F0423A 9deg 18deg)}
-.bk-sun{position:absolute;width:min(60vw,640px);aspect-ratio:1;left:66%;top:55%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#ffe58a 0%,#ffc93c 35%,rgba(255,201,60,0) 70%);pointer-events:none}
+  background:radial-gradient(60% 70% at 66% 50%,#1d1712 0%,#0b0a08 70%)}
+.bk-rays{position:absolute;inset:-20%;pointer-events:none;opacity:.22;background:repeating-conic-gradient(from 0deg at 66% 50%,rgba(227,27,47,.55) 0 7deg,rgba(227,27,47,0) 7deg 18deg);
+  -webkit-mask-image:radial-gradient(closest-side at 66% 50%,transparent 30%,#000 60%,transparent 100%);mask-image:radial-gradient(closest-side at 66% 50%,transparent 30%,#000 60%,transparent 100%)}
 .bk-grid{position:relative;z-index:2;display:grid;grid-template-columns:.8fr 1.2fr;gap:24px;align-items:center;width:100%;height:100%}
 .bk-copy{display:flex;flex-direction:column;gap:16px;min-width:0;color:#fff}
 .bk-copy .eyebrow{color:var(--sun)}
 .bk-copy h2{font-size:clamp(58px,8vw,118px);text-shadow:5px 5px 0 #8f0d1b}
 .bk-copy h2 span{color:var(--sun);display:block}
-.bk-copy p{max-width:40ch}
+.bk-copy p{max-width:40ch;color:#e7dccb}
 .layers{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:15px}
-.layers li{display:flex;gap:12px;color:rgba(255,255,255,.5);transition:color .25s}
+.layers li{display:flex;gap:12px;color:rgba(255,255,255,.38);transition:color .25s}
 .layers li span{font-family:var(--f-pixel);font-size:9px;padding-top:5px}
 .layers li.on{color:#fff}
 .layers li.on span{color:var(--sun)}
-.stamp{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.stamp b{font-family:var(--f-display);font-weight:400;font-size:66px;line-height:1;color:var(--ink);background:var(--sun);padding:6px 20px 10px;border-radius:16px;transform:rotate(-5deg);display:inline-block;box-shadow:0 8px 0 #c4901a}
-.stamp span{max-width:22ch}
 .bk-plate{position:relative;height:100%;min-width:0;display:flex;align-items:center;justify-content:center}
-.burger{position:relative;width:min(100%,570px);aspect-ratio:570/485;max-width:100%}
-@media (max-width:900px){.burger{width:min(100%,570px,calc((100svh - var(--nav) - 250px)*1.175))}}
-.burger img{position:absolute;max-width:none;height:auto;will-change:transform}
-.burger::after{content:"";position:absolute;left:8%;right:8%;bottom:-4%;height:9%;border-radius:50%;background:radial-gradient(closest-side,rgba(80,0,10,.45),rgba(80,0,10,0));pointer-events:none}
+.burger{position:relative;width:min(100%,640px,calc(100svh - var(--nav) - 40px));aspect-ratio:1;max-width:100%}
+.burger canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
+  -webkit-mask-image:radial-gradient(closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(closest-side,#000 72%,transparent 100%)}
+.burger .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  -webkit-mask-image:radial-gradient(closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(closest-side,#000 72%,transparent 100%)}
+.burger.ready .poster{visibility:hidden}
+.bk-load{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);font-family:var(--f-pixel);font-size:9px;color:rgba(255,255,255,.55);letter-spacing:.08em}
+.burger.ready .bk-load{display:none}
 @media (max-width:900px){
-  .bk-stage{background:repeating-conic-gradient(from 0deg at 50% 32%,#E31B2F 0 9deg,#F0423A 9deg 18deg)}
+  .bk-stage{background:radial-gradient(90% 55% at 50% 34%,#1d1712 0%,#0b0a08 75%)}
+  .bk-rays{background:repeating-conic-gradient(from 0deg at 50% 34%,rgba(227,27,47,.55) 0 7deg,rgba(227,27,47,0) 7deg 18deg);-webkit-mask-image:radial-gradient(closest-side at 50% 34%,transparent 30%,#000 60%,transparent 100%);mask-image:radial-gradient(closest-side at 50% 34%,transparent 30%,#000 60%,transparent 100%)}
   .bk-grid{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;gap:8px;padding-block:10px}
-  .bk-plate{order:-1}.layers,.bk-copy p{display:none}.bk-copy h2{font-size:48px}.bk-copy h2 span{display:inline}.stamp b{font-size:40px}.bk-copy{gap:10px}
-  .bk-sun{left:50%;top:32%;width:110vw}
+  .bk-plate{order:-1}.layers,.bk-copy p{display:none}.bk-copy h2{font-size:48px}.bk-copy h2 span{display:inline}.bk-copy{gap:10px}
+  .burger{width:min(112%,calc(100svh - var(--nav) - 150px));margin-inline:-6%}
 }
 
 /* ---------- dinner ---------- */
@@ -471,7 +474,7 @@ footer .tel{color:#fff}
 
 <div class="bk-track" id="burger">
   <div class="bk-stage">
-    <div class="bk-sun" aria-hidden="true"></div>
+    <div class="bk-rays" aria-hidden="true"></div>
     <div class="wrap bk-grid">
       <div class="bk-copy">
         <p class="eyebrow">BurgerBowl</p>
@@ -488,13 +491,10 @@ footer .tel{color:#fff}
         <div><a class="btn btn-sun" href="#prenota">Prenota un tavolo</a></div>
       </div>
       <div class="bk-plate">
-        <div class="burger" id="burgerEl">
-          <img src="img/layer6.webp" alt="Base del panino brioche tostata" width="473" height="106" data-x="277" data-y="416">
-          <img src="img/layer5.webp" alt="Fette di pomodoro maturo" width="468" height="67" data-x="279" data-y="369">
-          <img src="img/layer4.webp" alt="Hamburger di manzo con crosta" width="474" height="101" data-x="275" data-y="282">
-          <img src="img/layer3.webp" alt="Cheddar fuso" width="539" height="117" data-x="252" data-y="248">
-          <img src="img/layer2.webp" alt="Fette di bacon croccante" width="570" height="72" data-x="230" data-y="205">
-          <img src="img/layer1.webp" alt="Cupola del panino brioche al sesamo" width="475" height="176" data-x="279" data-y="37">
+        <div class="burger" id="burgerEl" role="img" aria-label="Il Brooklyn Burger si compone strato dopo strato: base brioche, pomodoro, manzo, cheddar, bacon e bun al sesamo">
+          <img class="poster" src="img/burger/f101.webp" alt="" width="640" height="640">
+          <canvas id="burgerCanvas" width="640" height="640" aria-hidden="true"></canvas>
+          <span class="bk-load" aria-hidden="true">Caricamento…</span>
         </div>
       </div>
     </div>
@@ -626,17 +626,36 @@ const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
     words.forEach((el,i)=>el.classList.toggle('on',i<=w));
   }
   const track=$('.lane-track');
-  /* burger layers: positioned from the plate width (no GSAP needed) */
-  const imgs=[...document.querySelectorAll('#burgerEl img')];
+  /* burger: real footage as a frame sequence, drawn to a canvas from scroll progress */
   const steps=[...document.querySelectorAll('#layers li')];
-  const box=$('#burgerEl');
-  function place(){const k=box.clientWidth/570;imgs.forEach(im=>{im.style.left=((+im.dataset.x-230)*k)+'px';im.style.top=((+im.dataset.y-37)*k)+'px';im.style.width=(+im.getAttribute('width')/570*100)+'%';});}
-  let lastW=0;const placeIfChanged=()=>{const w=box.clientWidth;if(w!==lastW){lastW=w;place();}};
-  place();lastW=box.clientWidth;let rq=0;addEventListener('resize',()=>{if(rq)return;rq=requestAnimationFrame(()=>{rq=0;placeIfChanged();});},{passive:true});
+  const bEl=$('#burgerEl'),bCv=$('#burgerCanvas'),bCtx=bCv.getContext('2d');
+  const MOB=matchMedia('(max-width: 760px)').matches;
+  const BN=101,BDIR=MOB?'img/burger-m/':'img/burger/',BSZ=MOB?420:640;
+  bCv.width=bCv.height=BSZ;
+  const STEP_AT=[0,.28,.36,.55,.73,.86]; /* when each layer lands, as a share of the clip */
+  const frames=new Array(BN);let bWant=BN-1,bDrawn=-1,bLoaded=0,bStarted=false,bRaf=0;
+  const src=i=>BDIR+'f'+String(i+1).padStart(3,'0')+'.webp';
+  function nearest(i){for(let d=0;d<BN;d++){if(frames[i-d]&&frames[i-d].complete&&frames[i-d].naturalWidth)return i-d;if(frames[i+d]&&frames[i+d].complete&&frames[i+d].naturalWidth)return i+d;}return -1;}
+  function draw(){bRaf=0;const k=nearest(bWant);if(k<0||k===bDrawn)return;bDrawn=k;bCtx.drawImage(frames[k],0,0,BSZ,BSZ);bEl.classList.add('ready');}
+  function want(p){
+    const i=Math.max(0,Math.min(BN-1,Math.round(p*(BN-1))));
+    steps.forEach((li,n)=>li.classList.toggle('on',p>=STEP_AT[n]));
+    if(i!==bWant||bDrawn<0){bWant=i;if(!bRaf)bRaf=requestAnimationFrame(draw);}
+  }
+  function loadFrames(){
+    if(bStarted)return;bStarted=true;
+    /* key frames first, then the rest, so scrubbing works while loading */
+    const order=[];for(let st of [10,5,1])for(let i=0;i<BN;i+=st)if(!order.includes(i))order.push(i);
+    let q=0;const next=()=>{if(q>=order.length)return;const i=order[q++];const im=new Image();im.decoding='async';
+      im.onload=im.onerror=()=>{bLoaded++;if(Math.abs(i-bWant)<6&&!bRaf)bRaf=requestAnimationFrame(draw);next();};im.src=src(i);frames[i]=im;};
+    for(let c=0;c<4;c++)next();
+  }
+  new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){loadFrames();o.disconnect();}},{rootMargin:'150% 0px'}).observe(bEl);
+  if(REDUCE){steps.forEach(x=>x.classList.add('on'));}
   if(!hasG){
     const lp=()=>{const r=track.getBoundingClientRect();return Math.min(1,Math.max(0,-r.top/Math.max(1,r.height-innerHeight)));};
     let sq=0;addEventListener('scroll',()=>{if(sq)return;sq=requestAnimationFrame(()=>{sq=0;LANE.p=lp();heroUI(LANE.p);});},{passive:true});
-    heroUI(0);document.documentElement.classList.add('games-static');steps.forEach(x=>x.classList.add('on'));return;
+    heroUI(0);document.documentElement.classList.add('games-static');steps.forEach(x=>x.classList.add('on'));loadFrames();want(1);return;
   }
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({ignoreMobileResize:true,autoRefreshEvents:'visibilitychange,DOMContentLoaded,load'});
@@ -660,11 +679,10 @@ const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
     gsap.from('.ticket .big',{scale:.4,rotate:-12,duration:.8,ease:'back.out(2.5)',stagger:.12,scrollTrigger:{trigger:'.tickets',start:'top 85%',once:true}});
   }
 
-  if(REDUCE){steps.forEach(s=>s.classList.add('on'));}
+  if(REDUCE){loadFrames();want(1);}
   else{
-    const tl=gsap.timeline({scrollTrigger:{trigger:'.bk-track',start:'top top+=66',end:'bottom bottom',scrub:.7}});
-    imgs.forEach((im,i)=>tl.fromTo(im,{y:-innerHeight*.9-(i*40),rotate:gsap.utils.random(-14,14),opacity:0},{y:0,rotate:0,opacity:1,duration:1,ease:'bounce.out',onStart:()=>steps[i].classList.add('on'),onReverseComplete:()=>steps[i].classList.remove('on')},i*.75));
-    tl.fromTo('.bk-sun',{scale:.6},{scale:1.25,duration:imgs.length*.75+.8,ease:'none'},0);
+    want(0);
+    ScrollTrigger.create({trigger:'.bk-track',start:'top top+=66',end:'bottom bottom',onUpdate:self=>want(self.progress)});
   }
   addEventListener('load',()=>ScrollTrigger.refresh());
 })();
