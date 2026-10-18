@@ -59,37 +59,39 @@ section{padding-block:clamp(64px,9vw,110px)}
 .head h2{font-size:clamp(32px,4.6vw,52px)}
 .head p{color:var(--muted);font-size:18px}
 
-/* hero: the school's own palette; the video sits on the right and dissolves into the paper */
-.hero{position:relative;overflow:hidden;background:var(--paper);min-height:min(88svh,820px);display:flex;align-items:center}
-.hero-media{position:absolute;top:0;right:0;bottom:0;width:66%}
-.hero-video{width:100%;height:100%;object-fit:cover;object-position:62% center}
-.hero-fade{position:absolute;inset:0;pointer-events:none;background:
-  linear-gradient(90deg,var(--paper) 0%,var(--paper) 34%,rgba(255,255,255,.88) 44%,rgba(255,255,255,0) 66%),
-  linear-gradient(0deg,var(--paper) 0%,rgba(255,255,255,0) 22%),
-  linear-gradient(180deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 14%)}
-.hero-copy{position:relative;z-index:2;display:flex;flex-direction:column;gap:16px;align-items:flex-start;padding-block:clamp(40px,7vw,80px);width:100%}
-.hero-copy>*{max-width:560px}
-.hero-logo{width:clamp(200px,24vw,300px);height:auto}
-.hero h1{font-size:clamp(34px,4.6vw,58px)}
+/* hero: real footage and the team, framed like a club noticeboard in the school's colours */
+.hero{position:relative;background:var(--paper);padding-block:clamp(28px,5vw,64px) clamp(48px,6vw,80px);overflow:hidden}
+.hero::before{content:"";position:absolute;right:-12%;top:-20%;width:62%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,var(--stone),rgba(245,242,236,0));pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);align-items:center}
+.hero-copy{display:flex;flex-direction:column;gap:16px;align-items:flex-start;min-width:0}
+.hero-logo{width:clamp(200px,22vw,280px);height:auto}
+.hero h1{font-size:clamp(34px,4.4vw,56px)}
 .hero h1 em{font-style:normal;color:var(--green)}
 .hero h1 b{color:var(--red);font-weight:inherit}
 .hero .lead{font-size:18px;color:var(--muted);max-width:46ch}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.vid-toggle{background:transparent;color:var(--muted);border:0;padding:8px 4px;font:700 14px var(--f-body);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
-.vid-toggle:hover{color:var(--ink)}
+.hero-visual{position:relative;min-width:0;padding-bottom:16%}
+.clip{width:74%;margin:0;position:relative;border-radius:22px;overflow:hidden;background:#111;aspect-ratio:576/672;box-shadow:0 24px 50px -24px rgba(22,23,26,.45)}
+.clip::before{content:"";position:absolute;inset:0 0 auto;height:6px;z-index:2;background:linear-gradient(90deg,var(--green) 0 33.3%,#fff 33.3% 66.6%,var(--red) 66.6%)}
+.clip video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.clip figcaption{position:absolute;left:14px;top:18px;z-index:2;display:flex;align-items:center;gap:8px;background:rgba(22,23,26,.72);color:#fff;font-weight:800;font-size:13px;padding:7px 12px;border-radius:999px}
+.clip .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px rgba(225,42,44,.3)}
+.vid-toggle{position:absolute;left:14px;bottom:14px;z-index:2;background:rgba(22,23,26,.72);color:#fff;border:0;border-radius:999px;padding:7px 12px;font:800 13px var(--f-body);cursor:pointer}
+.team{position:absolute;right:0;bottom:0;width:48%;margin:0;z-index:3;background:#fff;padding:10px 10px 12px;border-radius:14px;box-shadow:0 22px 44px -20px rgba(22,23,26,.5);transform:rotate(2.5deg)}
+.team img{display:block;width:100%;height:auto;border-radius:8px}
+.team figcaption{font-size:14px;color:var(--muted);padding:10px 4px 0}
+.team figcaption b{color:var(--ink);font-family:var(--f-display);font-size:16px;letter-spacing:.02em}
 @media (prefers-reduced-motion:no-preference){
   .in{animation:inUp .8s cubic-bezier(.2,.8,.2,1) both}
-  .in.d1{animation-delay:.1s}.in.d2{animation-delay:.2s}.in.d3{animation-delay:.32s}
-  @keyframes inUp{from{opacity:0;transform:translate3d(0,22px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
-  .hero-media{animation:mediaIn 1.2s cubic-bezier(.2,.8,.2,1) both}
-  @keyframes mediaIn{from{opacity:0;transform:translate3d(40px,0,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+  .in.d1{animation-delay:.12s}.in.d2{animation-delay:.22s}.in.d3{animation-delay:.34s}
+  @keyframes inUp{from{opacity:0;transform:translate3d(0,24px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+  .team.in{animation-name:teamIn}
+  @keyframes teamIn{from{opacity:0;transform:translate3d(0,30px,0) rotate(6deg)}to{opacity:1;transform:translate3d(0,0,0) rotate(2.5deg)}}
 }
-@media (max-width:860px){
-  .hero{display:block;min-height:0}
-  .hero-media{position:relative;width:100%;height:auto;aspect-ratio:16/10}
-  .hero-fade{background:linear-gradient(0deg,var(--paper) 0%,rgba(255,255,255,0) 30%);bottom:auto;height:auto;aspect-ratio:16/10;inset:0 0 auto 0;width:100%}
-  .hero-copy{padding-block:4px 44px}
-  .hero-logo{width:200px;margin-top:-8px}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-visual{order:-1;max-width:520px;width:100%;margin-inline:auto}
+  .hero-visual{padding-bottom:14%}
 }
 
 /* numbers */
@@ -212,22 +214,29 @@ footer a{color:#fff}
 </header>
 
 <header class="hero">
-  <div class="hero-media" aria-hidden="true">
-    <video class="hero-video" id="heroVideo" autoplay loop muted playsinline preload="metadata" poster="img/sib-poster.jpg">
-      <source src="img/sib-hero-mobile.mp4" type="video/mp4" media="(max-width: 760px)">
-      <source src="img/sib-hero.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div class="hero-fade" aria-hidden="true"></div>
-  <div class="hero-copy wrap">
-    <img class="hero-logo in" src="img/sib-logo.webp" alt="S.I.B. Scuola Italiana Bowling" width="520" height="330">
-    <p class="eyebrow in d1">Scuola Italiana Bowling · Palermo</p>
-    <h1 class="in d2">Dove nascono <em>i giocatori</em> più forti <b>d'Italia</b></h1>
-    <p class="lead in d3">La S.I.B. è una delle migliori scuole di bowling d'Italia. Si allena sulle piste del Bowling &amp; Games La Malfa, che la supervisiona, e porta i suoi atleti dal primo lancio fino alle competizioni mondiali.</p>
-    <div class="hero-actions in d3">
-      <a class="btn btn-green" href="tel:+393389714909">Chiama 338 971 4909</a>
-      <a class="btn btn-line" href="#corsi">Scopri i corsi</a>
-      <button class="vid-toggle" type="button" id="vidToggle" aria-label="Metti in pausa il video">Pausa video</button>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <img class="hero-logo in" src="img/sib-logo.webp" alt="S.I.B. Scuola Italiana Bowling" width="520" height="330">
+      <p class="eyebrow in d1">Scuola Italiana Bowling · Palermo</p>
+      <h1 class="in d2">Dove nascono <em>i giocatori</em> più forti <b>d'Italia</b></h1>
+      <p class="lead in d3">La S.I.B. è una delle migliori scuole di bowling d'Italia. Si allena sulle piste del Bowling &amp; Games La Malfa, che la supervisiona, e porta i suoi atleti dal primo lancio fino alle competizioni mondiali.</p>
+      <div class="hero-actions in d3">
+        <a class="btn btn-green" href="tel:+393389714909">Chiama 338 971 4909</a>
+        <a class="btn btn-line" href="#corsi">Scopri i corsi</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-label="La squadra e le piste della S.I.B.">
+      <figure class="clip in d1">
+        <video id="heroVideo" autoplay loop muted playsinline preload="metadata" poster="img/sib-strike-poster.jpg" aria-label="Un tiro sulle piste della S.I.B. che finisce in strike">
+          <source src="img/sib-strike.mp4" type="video/mp4">
+        </video>
+        <figcaption><span class="dot" aria-hidden="true"></span>Sulle nostre piste</figcaption>
+        <button class="vid-toggle" type="button" id="vidToggle" aria-label="Metti in pausa il video">Pausa</button>
+      </figure>
+      <figure class="team in d3">
+        <img src="img/sib-team.webp" alt="La squadra Bowling &amp; Games Team S.I.B. con la coppa, sulle piste" width="900" height="639">
+        <figcaption><b>Team S.I.B.</b> con la coppa</figcaption>
+      </figure>
     </div>
   </div>
 </header>
